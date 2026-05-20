@@ -2367,7 +2367,59 @@ document.addEventListener("change", (e) => {
 
 
 (function () {
-  const ENDPOINT = "https://script.google.com/macros/s/AKfycbwgmT9UWVuE8gTd4DOLMZRaxNJDFMRlZr1kymCKxy9x0fiaSOasI0zC2uNUmJNi-oIwzw/exec";
+  const ENDPOINT = "https://script.google.com/macros/s/AKfycbyrr4PxHZQgFia18ijIe1reVh0aLek3AVQn6Vhw2-DnsUf7cWcckBuTYcTMzMXEou6s-Q/exec";
+
+  const UNIQUE_KEY = "worldcup_unique_user_v1";
+
+  const isUnique =
+    localStorage.getItem(UNIQUE_KEY) !== "true";
+
+  if (isUnique) {
+    localStorage.setItem(UNIQUE_KEY, "true");
+  }
+
+  new Image().src =
+    ENDPOINT +
+    "?open=1" +
+    (isUnique ? "&unique=1" : "") +
+    "&t=" + Date.now();
+
+  window.setWorldCupStats = function (d) {
+    if (!d) return;
+
+    const uniqueEl =
+      document.getElementById("uniqueUsersWC");
+
+    const opensEl =
+      document.getElementById("openCountWC");
+
+    if (
+      uniqueEl &&
+      typeof d.unique === "number"
+    ) {
+      uniqueEl.textContent =
+        d.unique.toLocaleString("es-PA");
+    }
+
+    if (
+      opensEl &&
+      typeof d.opens === "number"
+    ) {
+      opensEl.textContent =
+        d.opens.toLocaleString("es-PA");
+    }
+  };
+
+  const script = document.createElement("script");
+
+  script.src =
+    ENDPOINT +
+    "?callback=setWorldCupStats&t=" +
+    Date.now();
+
+  document.body.appendChild(script);
+})();
+
 
   const cooldownMs = 5 * 60 * 1000;
   const lastKey = "worldcup_hit_last";
@@ -2443,15 +2495,3 @@ if ("serviceWorker" in navigator) {
 }
 
 
-(function () {
-  const KEY = "worldcup_open_count";
-  const el = document.getElementById("openCountWC");
-
-  if (!el) return;
-
-  let count = Number(localStorage.getItem(KEY) || 0);
-  count += 1;
-
-  localStorage.setItem(KEY, count);
-  el.textContent = count;
-})();
