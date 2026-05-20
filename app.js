@@ -2118,9 +2118,9 @@ knockoutRounds.innerHTML = `
 
 
 
-  <button id="exportExcelBtn" class="winner-btn export-btn">
+ <button id="exportExcelBtn" class="winner-btn export-btn">
     Exportar Resultados
-  </button> 
+  </button>
 
   <div id="winnerReveal" class="winner-hidden">
 
@@ -2421,26 +2421,6 @@ document.addEventListener("change", (e) => {
 })();
 
 
-  const cooldownMs = 5 * 60 * 1000;
-  const lastKey = "worldcup_hit_last";
-  const now = Date.now();
-  const last = Number(localStorage.getItem(lastKey) || 0);
-
-  if ((now - last) > cooldownMs) {
-    localStorage.setItem(lastKey, String(now));
-    new Image().src = ENDPOINT + "?hit=1&t=" + Date.now();
-  }
-
-  window.setWorldCupCount = function (d) {
-    if (!d || typeof d.value !== "number") return;
-    const el = document.getElementById("openCountWC");
-    if (el) el.textContent = d.value.toLocaleString("es-PA");
-  };
-
-  const script = document.createElement("script");
-  script.src = ENDPOINT + "?callback=setWorldCupCount&t=" + Date.now();
-  document.body.appendChild(script);
-})();
 });
 window.exportGroupsToExcel = function () {
   const wb = XLSX.utils.book_new();
