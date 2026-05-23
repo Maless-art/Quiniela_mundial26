@@ -2369,7 +2369,7 @@ document.addEventListener("change", (e) => {
 (function () {
   const ENDPOINT = "https://script.google.com/macros/s/AKfycbyrr4PxHZQgFia18ijIe1reVh0aLek3AVQn6Vhw2-DnsUf7cWcckBuTYcTMzMXEou6s-Q/exec";
 
-  const UNIQUE_KEY = "worldcup_unique_user_v2";
+  const UNIQUE_KEY = "worldcup_unique_user_v3";
 
   const isUnique =
     localStorage.getItem(UNIQUE_KEY) !== "true";
